@@ -1,0 +1,166 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Scientific Calculator";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background-color: rgb(194, 194, 240);
+        }
+
+        .calculator {
+            margin: 0 auto;
+            padding: 20px;
+            width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator input {
+            width: 100%;
+            height: 40px;
+            margin-bottom: 10px;
+            text-align: right;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .calculator button {
+            width: 23%;
+            height: 40px;
+            margin: 1%;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        .calculator button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <form method="post" asp-page-handler="OnPostCalculate">
+            <!-- Display Screen -->
+            <input type="text" id="txtResult" name="Result" value="@Model.Result" readonly />
+
+            <!-- Calculator Buttons -->
+            <div>
+                <button type="button" onclick="appendNumber('7')">7</button>
+                <button type="button" onclick="appendNumber('8')">8</button>
+                <button type="button" onclick="appendNumber('9')">9</button>
+                <button type="button" onclick="appendOperator('/')">/</button>
+            </div>
+            <div>
+                <button type="button" onclick="appendNumber('4')">4</button>
+                <button type="button" onclick="appendNumber('5')">5</button>
+                <button type="button" onclick="appendNumber('6')">6</button>
+                <button type="button" onclick="appendOperator('*')">*</button>
+            </div>
+            <div>
+                <button type="button" onclick="appendNumber('1')">1</button>
+                <button type="button" onclick="appendNumber('2')">2</button>
+                <button type="button" onclick="appendNumber('3')">3</button>
+                <button type="button" onclick="appendOperator('-')">-</button>
+            </div>
+            <div>
+                <button type="button" onclick="appendNumber('0')">0</button>
+                <button type="button" onclick="clearScreen()">C</button>
+                <button type="button" onclick="calculate()">=</button>
+                <button type="button" onclick="appendOperator('+')">+</button>
+                <button type="button" onclick="appendClosingParenthesis()">)</button>
+            </div>
+            <div>
+
+                <!-- Scientific Calculator Functions -->
+                <button type="button" onclick="appendFunction('sin')">sin</button>
+                <button type="button" onclick="appendFunction('cos')">cos</button>
+                <button type="button" onclick="appendFunction('tan')">tan</button>
+                <button type="button" onclick="appendFunction('sqrt')">√</button>
+                <button type="button" onclick="square()">x²</button> <!-- Square Button -->
+                <button type="button" onclick="cube()">x³</button> <!-- Cube Button -->
+            </div>
+            <div>
+                <button type="button" onclick="appendConstant('π')">π</button>
+                <button type="button" onclick="appendConstant('e')">e</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function appendNumber(number) {
+            document.getElementById('txtResult').value += number;
+        }
+
+        function appendClosingParenthesis() {
+            document.getElementById('txtResult').value += ')';
+        }
+
+        function appendOperator(operator) {
+            document.getElementById('txtResult').value += ' ' + operator + ' ';
+        }
+
+        function appendFunction(func) {
+            document.getElementById('txtResult').value += func + '(';
+        }
+
+        function appendConstant(constant) {
+            document.getElementById('txtResult').value += constant;
+        }
+
+        function clearScreen() {
+            document.getElementById('txtResult').value = '';
+        }
+
+        function calculate() {
+            var input = document.getElementById('txtResult').value;
+
+            try {
+                // Replace scientific functions
+                input = input.replace('π', Math.PI).replace('e', Math.E);
+                input = input.replace('sin', 'Math.sin').replace('cos', 'Math.cos').replace('tan', 'Math.tan').replace('sqrt', 'Math.sqrt');
+
+                var result = eval(input);
+                document.getElementById('txtResult').value = result;
+            } catch (e) {
+                document.getElementById('txtResult').value = 'Error';
+            }
+        }
+
+        function square() {
+            var input = document.getElementById('txtResult').value;
+            try {
+                var result = Math.pow(parseFloat(input), 2);
+                document.getElementById('txtResult').value = result;
+            } catch (e) {
+                document.getElementById('txtResult').value = 'Error';
+            }
+        }
+
+        function cube() {
+            var input = document.getElementById('txtResult').value;
+            try {
+                var result = Math.pow(parseFloat(input), 3);
+                document.getElementById('txtResult').value = result;
+            } catch (e) {
+                document.getElementById('txtResult').value = 'Error';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
