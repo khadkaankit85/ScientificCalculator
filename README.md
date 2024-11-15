@@ -5,4 +5,4 @@ pull it , download dotnet cli and run `dotnet run` to run the application. :)
 
 ## Screenshot
 
-![Main Page]("https://github.com/khadkaankit85/Assets/blob/master/CalculatorDotNet/image.png?raw=true")
+![Main Page](https://raw.githubusercontent.com/khadkaankit85/Assets/refs/heads/master/CalculatorDotNet/image.png)
