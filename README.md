@@ -1,7 +1,6 @@
-# Calculator Application
+# Scientific Calculator Using .NET Razor Pages
 
-This is a simple calculator application built using ASP.NET Core.
-pull it , download dotnet cli and run `dotnet run` to run the application. :)
+This is a simple calculator application built using ASP.NET Core. Pull it, download the .NET CLI, and run `dotnet run` to start the application. :)
 
 ## Screenshot
 
